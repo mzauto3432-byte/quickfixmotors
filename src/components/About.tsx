@@ -1,5 +1,11 @@
+import { useState } from 'react';
 import { motion } from 'framer-motion';
-import { Shield, Award, Clock, Users } from 'lucide-react';
+import { Shield, Award, Clock, Users, Wrench, Cog, Gauge, Car } from 'lucide-react';
+
+const WORKSHOP_IMAGES = [
+  'https://images.pexels.com/photos/3807285/pexels-photo-3807285.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1',
+  'https://images.pexels.com/photos/162553/auto-car-vehicle-162553.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1',
+];
 
 const stats = [
   { icon: <Users size={22} />, value: '5,000+', label: 'Cars Serviced' },
@@ -9,6 +15,19 @@ const stats = [
 ];
 
 export default function About() {
+  const [imgSrc, setImgSrc] = useState(WORKSHOP_IMAGES[0]);
+  const [imgFailed, setImgFailed] = useState(false);
+
+  const handleImgError = () => {
+    const currentIndex = WORKSHOP_IMAGES.indexOf(imgSrc);
+    const nextIndex = currentIndex + 1;
+    if (nextIndex < WORKSHOP_IMAGES.length) {
+      setImgSrc(WORKSHOP_IMAGES[nextIndex]);
+    } else {
+      setImgFailed(true);
+    }
+  };
+
   return (
     <section id="about" className="section-padding relative overflow-hidden">
       <div className="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-white/10 to-transparent" />
@@ -23,14 +42,32 @@ export default function About() {
             transition={{ duration: 0.7 }}
             className="relative"
           >
-            <div className="relative aspect-[4/3] rounded-2xl overflow-hidden group">
-              <img
-                src="https://images.pexels.com/photos/4119760/pexels-photo-4119760.jpeg?auto=compress&cs=tinysrgb&w=900"
-                alt="Quick Fix Motors Workshop"
-                className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-110"
-                loading="lazy"
-                decoding="async"
-              />
+            <div className="relative aspect-[4/3] rounded-2xl overflow-hidden group bg-brand-black-card">
+              {!imgFailed ? (
+                <img
+                  src={imgSrc}
+                  alt="Quick Fix Motors Workshop"
+                  className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-110"
+                  loading="eager"
+                  decoding="async"
+                  crossOrigin="anonymous"
+                  referrerPolicy="no-referrer"
+                  onError={handleImgError}
+                />
+              ) : (
+                <div className="w-full h-full flex flex-col items-center justify-center bg-gradient-to-br from-brand-black-card via-brand-black to-brand-black-card gap-4">
+                  <div className="relative">
+                    <Wrench size={48} className="text-brand-red/60" />
+                    <Cog size={32} className="text-brand-red/30 absolute -top-2 -right-4 animate-spin" style={{ animationDuration: '8s' }} />
+                  </div>
+                  <div className="flex gap-3 mt-2">
+                    <Car size={20} className="text-white/20" />
+                    <Gauge size={20} className="text-white/20" />
+                    <Shield size={20} className="text-white/20" />
+                  </div>
+                  <span className="text-white/30 text-sm font-medium mt-1">Quick Fix Motors</span>
+                </div>
+              )}
               <div className="absolute inset-0 bg-gradient-to-t from-brand-black via-brand-black/30 to-transparent" />
               <div className="absolute inset-0 bg-gradient-to-r from-brand-black/40 to-transparent" />
             </div>
