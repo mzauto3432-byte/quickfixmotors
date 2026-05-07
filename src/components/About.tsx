@@ -23,12 +23,13 @@ export default function About() {
             transition={{ duration: 0.7 }}
             className="relative"
           >
-            <div className="relative aspect-[4/3] rounded-2xl overflow-hidden">
+            <div className="relative aspect-[4/3] rounded-2xl overflow-hidden group">
               <img
-                src="https://images.pexels.com/photos/3807285/pexels-photo-3807285.jpeg?auto=compress&cs=tinysrgb&w=800"
+                src="https://images.pexels.com/photos/4119760/pexels-photo-4119760.jpeg?auto=compress&cs=tinysrgb&w=900"
                 alt="Quick Fix Motors Workshop"
-                className="w-full h-full object-cover"
+                className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-110"
                 loading="lazy"
+                decoding="async"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-brand-black via-brand-black/30 to-transparent" />
               <div className="absolute inset-0 bg-gradient-to-r from-brand-black/40 to-transparent" />
